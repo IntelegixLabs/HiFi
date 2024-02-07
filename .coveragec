@@ -1,0 +1,4 @@
+[run]
+omit =
+    *tests*
+    stocks/__init__.py
