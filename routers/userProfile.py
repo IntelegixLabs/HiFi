@@ -10,7 +10,7 @@ from schemas.userPayload import userPayload
 
 router = APIRouter(
     prefix='/user_profile',
-    tags=['userProfile']
+    tags=['User Profile']
 )
 
 
