@@ -10,9 +10,10 @@
 $ git clone https://github.com/IntelegixLabs/HiFi.git
 $ cd HiFi
 $ pip install -r requirements.txt
-$ python app.py
+$ python main.py
 ```
 
+Swagger UI `http://localhost:5000/docs`
 
 Run `uvicorn main:app --reload`
 

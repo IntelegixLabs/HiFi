@@ -1,3 +1,3 @@
 from config.database import Base
-from models.userProfile import userProfileModel
-from models.eKyc import eKycModel
+from models.userProfileModel import userProfileModel
+from models.eKycModel import eKycModel

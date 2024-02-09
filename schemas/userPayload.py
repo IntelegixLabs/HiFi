@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
 
-class User(BaseModel):
+class userPayload(BaseModel):
     id: str
     username: str
     email: str

@@ -1,15 +1,19 @@
-from fastapi.security import OAuth2AuthorizationCodeBearer
+from fastapi.security import OAuth2AuthorizationCodeBearer, OAuth2PasswordBearer
 from keycloak import KeycloakOpenID  # pip require python-keycloak
 from config.keycloak_config import settings
 from fastapi import Security, HTTPException, status, Depends
 from pydantic import Json
-from schemas import User
+from schemas import userPayload
 
-# This is used for fastapi docs authentication
-oauth2_scheme = OAuth2AuthorizationCodeBearer(
-    authorizationUrl=settings.authorization_url,  # https://sso.example.com/auth/
+oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl=settings.token_url,  # https://sso.example.com/auth/realms/example-realm/protocol/openid-connect/token
 )
+
+# This is used for fastapi docs authentication
+# oauth2_scheme = OAuth2AuthorizationCodeBearer(
+#     authorizationUrl=settings.authorization_url,  # https://sso.example.com/auth/
+#     tokenUrl=settings.token_url,  # https://sso.example.com/auth/realms/example-realm/protocol/openid-connect/token
+# )
 
 # This actually does the auth checks
 # client_secret_key is not mandatory if the client is public on keycloak
@@ -50,10 +54,10 @@ async def get_payload(token: str = Security(oauth2_scheme)) -> dict:
         )
 
 
-# Get user infos from the payload
-async def get_user_info(payload: dict = Depends(get_payload)) -> User:
+# Get user info's from the payload
+async def get_user_info(payload: dict = Depends(get_payload)) -> userPayload:
     try:
-        return User(
+        return userPayload(
             id=payload.get("sub"),
             username=payload.get("preferred_username"),
             email=payload.get("email"),
