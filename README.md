@@ -24,10 +24,17 @@ $ cd HiFi
 $ pytest --disable-warnings  
 ```
 
-## 4. Getting Started With UI Application
+## 4. Run this project with docker locally
+
+```sh
+$ cd HiFi
+$ docker-compose -f docker-compose.yml up -d --build
+```
+
+## 5. Getting Started With UI Application
 
 
-## 5. Project Requirements
+## 6. Project Requirements
 
 <h4>Languages</h4>
 <ul>
@@ -35,10 +42,10 @@ $ pytest --disable-warnings
   <li>Python 3.12.1</li>
 </ul>
 
-## 6. Application Screenshots / <a href="">Demo.</a>
+## 8. Application Screenshots / <a href="">Demo.</a>
 
 
-## 7. Components to be built (Work In Progress)
+## 8. Components to be built (Work In Progress)
 
 * [x] API Enhancement.
 
