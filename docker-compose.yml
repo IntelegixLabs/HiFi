@@ -121,6 +121,14 @@ services:
     networks:
       - kong-net
     restart: always
+  grafana:
+    image: grafana/grafana:7.2.2
+    ports:
+      - 3000:3000
+    restart: always
+    networks:
+      - kong-net
+
 
   hifi_web:
     container_name: hifi_web
