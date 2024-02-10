@@ -1,6 +1,6 @@
 import uvicorn
 from models import Base
-from fastapi import FastAPI, Depends, APIRouter
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from config.database import engine
 from routers.auth import get_user_info
