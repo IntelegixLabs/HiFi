@@ -2,6 +2,7 @@ import os
 
 import uvicorn
 from dotenv import load_dotenv
+from models import Base
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 

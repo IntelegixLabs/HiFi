@@ -1,8 +1,7 @@
-from fastapi.security import OAuth2AuthorizationCodeBearer, OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer
 from keycloak import KeycloakOpenID  # pip require python-keycloak
 from config.keycloak_config import settings
 from fastapi import Security, HTTPException, status, Depends
-from pydantic import Json
 from schemas import userPayload
 
 oauth2_scheme = OAuth2PasswordBearer(
