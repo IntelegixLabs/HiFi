@@ -1,0 +1,160 @@
+version: '3.9'
+
+volumes:
+  pipeline:
+    driver: local
+networks:
+  kong-net:
+    name: kong-net
+    driver: bridge
+
+services:
+  kong_database:
+    image: postgres:13.0
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    container_name:
+      kong_database
+    networks:
+      - kong-net
+
+  kong_gateway:
+    image: kong/kong-gateway:3.5.0.2
+    container_name: kong_gateway
+    ports:
+      - 8000:8000
+      - 8001:8001
+      - 8002:8002
+      - 8003:8003
+      - 8004:8004
+      - 8443:8443
+      - 8444:8444
+      - 8445:8445
+    environment:
+      - KONG_DATABASE=${KONG_DATABASE}
+      - KONG_PG_HOST=${KONG_PG_HOST} # docker container name
+      - KONG_PG_USER=${KONG_PG_USER}
+      - KONG_PG_PASSWORD=${KONG_PG_PASSWORD}
+      - KONG_PASSWORD=${KONG_PASSWORD}
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=${KONG_ADMIN_LISTEN}
+      - KONG_ADMIN_GUI_URL=${KONG_ADMIN_GUI_URL}
+
+    command: sh -c "kong migrations bootstrap && kong start"
+    networks:
+      - kong-net
+    depends_on:
+      - kong_database
+  konga_web:
+    image: pantsel/konga
+    container_name: konga_web
+    ports:
+      - 1337:1337
+    networks:
+      - kong-net
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      TOKEN_SECRET: ${TOKEN_SECRET}
+    depends_on:
+      - kong_database
+      - kong_gateway
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.6
+    container_name: keycloak
+    ports:
+      - 8080:8080
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    command: [ "start-dev" ]
+    networks:
+      - kong-net
+  zipkin:
+    image: openzipkin/zipkin:3.0
+    container_name: zipkin
+    ports:
+      - 9411:9411
+    restart: unless-stopped
+    networks:
+      - kong-net
+  elasticsearch:
+    image: elasticsearch:8.12.0
+    container_name: elasticsearch
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - kong-net
+    restart: always
+    environment:
+      ES_JAVA_OPTS: -Xms1024m -Xmx1024m
+      discovery.type: single-node
+  logstash:
+    image: logstash:8.12.0
+    container_name: logstash
+    ports:
+      - 5555:5555/udp
+      - 5044:5044
+      - 9600:9600
+    networks:
+      - kong-net
+    restart: always
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_URL: ${ELASTICSEARCH_URL}
+    volumes:
+      - pipeline:/usr/share/logstash/pipeline/
+  kibana:
+    image: kibana:8.12.0
+    container_name: kibana
+    ports:
+      - 5601:5601
+    networks:
+      - kong-net
+    restart: always
+    environment:
+      ELASTICSEARCH_URL: ${ELASTICSEARCH_URL}
+  prometheus:
+    image: prom/prometheus:v2.22.0
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - kong-net
+    restart: always
+  grafana:
+    image: grafana/grafana:7.2.2
+    ports:
+      - 3000:3000
+    restart: always
+    networks:
+      - kong-net
+
+
+  hifi_web:
+    container_name: hifi_web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    ports:
+      - 5000:5000
+    networks:
+      - kong-net
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    depends_on:
+      - keycloak
+      - kong_database
+      - kong_gateway
