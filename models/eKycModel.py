@@ -12,5 +12,3 @@ class eKycModel(Base):
     kycVerified = Column(Boolean, default=False, nullable=False)
     createdAt = Column(String, default=datetime.now, nullable=False)
     updatedAt = Column(String, default=datetime.now, nullable=False)
-
-
