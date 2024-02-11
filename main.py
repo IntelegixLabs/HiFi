@@ -1,11 +1,17 @@
+import os
+
 import uvicorn
-from models import Base
-from fastapi import FastAPI, Depends, APIRouter
+from dotenv import load_dotenv
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+
 from config.database import engine
+from models import Base
+from routers import userProfile
 from routers.auth import get_user_info
 from schemas import userPayload
-from routers import userProfile
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -20,7 +26,6 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
 )
-
 
 Base.metadata.create_all(bind=engine)
 
@@ -38,4 +43,5 @@ async def root(user: userPayload = Depends(get_user_info)):
 app.include_router(userProfile.router)
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", host="localhost", port=5000, reload=True)
+    uvicorn.run("main:app", host=os.getenv("HIFI_APP_HOST", "localhost"), port=int(os.getenv("HIFI_APP_PORT", 5000)),
+                reload=True)
