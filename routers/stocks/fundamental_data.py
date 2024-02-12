@@ -13,13 +13,13 @@ ALPHA_VANTAGE_URL = os.getenv("ALPHA_VANTAGE_URL")
 ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY")
 
 router = APIRouter(
-    prefix='/core_stocks',
-    tags=['Core Stocks APIs']
+    prefix='/fundamental_data',
+    tags=['Fundamental Data of Stocks']
 )
 
 
-@router.get('/SYMBOL_SEARCH/query', status_code=status.HTTP_200_OK)
-async def SYMBOL_SEARCH(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/OVERVIEW/query', status_code=status.HTTP_200_OK)
+async def OVERVIEW(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -33,8 +33,8 @@ async def SYMBOL_SEARCH(request: Request, user: userPayload = Depends(get_user_i
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
 
 
-@router.get('/TIME_SERIES_INTRADAY/query', status_code=status.HTTP_200_OK)
-async def TIME_SERIES_INTRADAY(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/INCOME_STATEMENT/query', status_code=status.HTTP_200_OK)
+async def INCOME_STATEMENT(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -48,8 +48,8 @@ async def TIME_SERIES_INTRADAY(request: Request, user: userPayload = Depends(get
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
 
 
-@router.get('/TIME_SERIES_DAILY/query', status_code=status.HTTP_200_OK)
-async def TIME_SERIES_DAILY(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/BALANCE_SHEET/query', status_code=status.HTTP_200_OK)
+async def BALANCE_SHEET(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -63,8 +63,8 @@ async def TIME_SERIES_DAILY(request: Request, user: userPayload = Depends(get_us
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
 
 
-@router.get('/TIME_SERIES_WEEKLY/query', status_code=status.HTTP_200_OK)
-async def TIME_SERIES_WEEKLY(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/CASH_FLOW/query', status_code=status.HTTP_200_OK)
+async def CASH_FLOW(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -78,8 +78,8 @@ async def TIME_SERIES_WEEKLY(request: Request, user: userPayload = Depends(get_u
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
 
 
-@router.get('/TIME_SERIES_WEEKLY_ADJUSTED/query', status_code=status.HTTP_200_OK)
-async def TIME_SERIES_WEEKLY_ADJUSTED(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/EARNINGS/query', status_code=status.HTTP_200_OK)
+async def EARNINGS(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -93,8 +93,8 @@ async def TIME_SERIES_WEEKLY_ADJUSTED(request: Request, user: userPayload = Depe
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
 
 
-@router.get('/TIME_SERIES_MONTHLY/query', status_code=status.HTTP_200_OK)
-async def TIME_SERIES_MONTHLY(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/LISTING_STATUS/query', status_code=status.HTTP_200_OK)
+async def LISTING_STATUS(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -108,8 +108,8 @@ async def TIME_SERIES_MONTHLY(request: Request, user: userPayload = Depends(get_
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
 
 
-@router.get('/TIME_SERIES_MONTHLY_ADJUSTED/query', status_code=status.HTTP_200_OK)
-async def TIME_SERIES_MONTHLY_ADJUSTED(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/EARNINGS_CALENDAR/query', status_code=status.HTTP_200_OK)
+async def EARNINGS_CALENDAR(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -123,8 +123,8 @@ async def TIME_SERIES_MONTHLY_ADJUSTED(request: Request, user: userPayload = Dep
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
 
 
-@router.get('/GLOBAL_QUOTE/query', status_code=status.HTTP_200_OK)
-async def GLOBAL_QUOTE(request: Request, user: userPayload = Depends(get_user_info)):
+@router.get('/IPO_CALENDAR/query', status_code=status.HTTP_200_OK)
+async def IPO_CALENDAR(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
@@ -136,22 +136,3 @@ async def GLOBAL_QUOTE(request: Request, user: userPayload = Depends(get_user_in
         return response.json()
     except Exception as err:
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
-
-
-@router.get('/MARKET_STATUS/query', status_code=status.HTTP_200_OK)
-async def MARKET_STATUS(request: Request, user: userPayload = Depends(get_user_info)):
-    params = request.query_params
-    if user is None:
-        raise HTTPException(status_code=401, detail='Authentication failed')
-    try:
-        url = ALPHA_VANTAGE_URL + "/query?" + str(params) + "&apikey=" + ALPHA_VANTAGE_KEY
-        payload = {}
-        headers = {'User-Agent': 'request'}
-        response = requests.request("GET", url, headers=headers, data=payload)
-        return response.json()
-    except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
-
-
-
-
