@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config.database import engine
 from models import Base
 from routers import userProfile
+from routers.stocks import core_stocks
 from routers.auth import get_user_info
 from schemas import userPayload
 
@@ -42,6 +43,7 @@ async def root(user: userPayload = Depends(get_user_info)):
 
 
 app.include_router(userProfile.router)
+app.include_router(core_stocks.router)
 
 if __name__ == '__main__':
     uvicorn.run("main:app", host=os.getenv("HIFI_APP_HOST", "localhost"), port=int(os.getenv("HIFI_APP_PORT", 5000)),
