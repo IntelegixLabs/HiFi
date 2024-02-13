@@ -181,5 +181,3 @@ async def ALL_COMMODITIES(request: Request, user: userPayload = Depends(get_user
         return response.json()
     except Exception as err:
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
-
-

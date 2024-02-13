@@ -1,6 +1,6 @@
 import os
 import requests
-from fastapi import APIRouter, Depends, HTTPException, Path, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from starlette import status
 from ..auth import get_user_info
 from schemas.userPayload import userPayload

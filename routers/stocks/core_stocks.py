@@ -1,6 +1,6 @@
 import os
 import requests
-from fastapi import APIRouter, Depends, HTTPException, Path, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from starlette import status
 from ..auth import get_user_info
 from schemas.userPayload import userPayload
@@ -151,7 +151,3 @@ async def MARKET_STATUS(request: Request, user: userPayload = Depends(get_user_i
         return response.json()
     except Exception as err:
         return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
-
-
-
-
