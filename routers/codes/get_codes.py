@@ -1,17 +1,9 @@
 import csv
-import os
-import json
-from fastapi import APIRouter, Depends, HTTPException, Request
+
+from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
 from ..auth import get_user_info
 from schemas.userPayload import userPayload
-
-from dotenv import load_dotenv
-
-load_dotenv()
-
-ALPHA_VANTAGE_URL = os.getenv("ALPHA_VANTAGE_URL")
-ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY")
 
 router = APIRouter(
     prefix='/codes',
@@ -20,7 +12,7 @@ router = APIRouter(
 
 
 @router.get('/currency_codes', status_code=status.HTTP_200_OK)
-async def Currency_codes(user: userPayload = Depends(get_user_info)):
+async def currency_codes(user: userPayload = Depends(get_user_info)):
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
     try:
@@ -36,7 +28,7 @@ async def Currency_codes(user: userPayload = Depends(get_user_info)):
 
 
 @router.get('/crypto_currency_codes', status_code=status.HTTP_200_OK)
-async def Currency_codes(user: userPayload = Depends(get_user_info)):
+async def crypto_currency_codes(user: userPayload = Depends(get_user_info)):
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
     try:
