@@ -12,6 +12,7 @@ from routers.stocks import core_stocks, fundamental_data
 from routers.forex import forex
 from routers.cryptocurrencies import crypto
 from routers.commodities import commodities
+from routers.economic_indicators import economic_indicators
 from routers.auth import get_user_info
 from schemas import userPayload
 
@@ -50,6 +51,7 @@ app.include_router(fundamental_data.router)
 app.include_router(forex.router)
 app.include_router(crypto.router)
 app.include_router(commodities.router)
+app.include_router(economic_indicators.router)
 
 if __name__ == '__main__':
     uvicorn.run("main:app", host=os.getenv("HIFI_APP_HOST", "localhost"), port=int(os.getenv("HIFI_APP_PORT", 5000)),
