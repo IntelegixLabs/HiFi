@@ -28,6 +28,7 @@ $ pytest --disable-warnings
 
 ```sh
 $ cd HiFi
+$ docker system prune 
 $ docker-compose -f docker-compose.yml up -d --build
 ```
 

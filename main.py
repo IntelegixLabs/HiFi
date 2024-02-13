@@ -2,7 +2,6 @@ import os
 
 import uvicorn
 from dotenv import load_dotenv
-from models import Base
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -10,6 +9,7 @@ from config.database import engine
 from models import Base
 from routers import userProfile
 from routers.stocks import core_stocks, fundamental_data
+from routers.forex import forex
 from routers.auth import get_user_info
 from schemas import userPayload
 
@@ -45,6 +45,7 @@ async def root(user: userPayload = Depends(get_user_info)):
 app.include_router(userProfile.router)
 app.include_router(core_stocks.router)
 app.include_router(fundamental_data.router)
+app.include_router(forex.router)
 
 if __name__ == '__main__':
     uvicorn.run("main:app", host=os.getenv("HIFI_APP_HOST", "localhost"), port=int(os.getenv("HIFI_APP_PORT", 5000)),
