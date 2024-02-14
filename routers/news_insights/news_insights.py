@@ -11,6 +11,7 @@ load_dotenv()
 
 ALPHA_VANTAGE_URL = os.getenv("ALPHA_VANTAGE_URL")
 ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY")
+ALPHA_VANTAGE_API_URL = os.getenv("ALPHA_VANTAGE_API_URL")
 
 router = APIRouter(
     prefix='/news_insights',
@@ -30,7 +31,7 @@ async def NEWS_SENTIMENT(request: Request, user: userPayload = Depends(get_user_
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TOP_GAINERS_LOSERS/query', status_code=status.HTTP_200_OK)
@@ -45,34 +46,37 @@ async def TOP_GAINERS_LOSERS(request: Request, user: userPayload = Depends(get_u
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
-@router.get('/ANALYTICS/query', status_code=status.HTTP_200_OK)
+@router.get('/timeseries/analytics', status_code=status.HTTP_200_OK)
 async def ANALYTICS(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
     try:
-        url = ALPHA_VANTAGE_URL + "/query?" + str(params) + "&apikey=" + ALPHA_VANTAGE_KEY
+        url = ALPHA_VANTAGE_API_URL + "/timeseries/analytics?" + str(params) + "&apikey=" + ALPHA_VANTAGE_KEY
+        url = url.replace("%2C", ",")
         payload = {}
         headers = {'User-Agent': 'request'}
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
-@router.get('/ADVANCED_ANALYTICS/query', status_code=status.HTTP_200_OK)
+@router.get('/timeseries/running_analytics', status_code=status.HTTP_200_OK)
 async def ADVANCED_ANALYTICS(request: Request, user: userPayload = Depends(get_user_info)):
     params = request.query_params
     if user is None:
         raise HTTPException(status_code=401, detail='Authentication failed')
     try:
-        url = ALPHA_VANTAGE_URL + "/query?" + str(params) + "&apikey=" + ALPHA_VANTAGE_KEY
+        url = ALPHA_VANTAGE_API_URL + "/timeseries/running_analytics?" + str(params) + "&apikey=" + ALPHA_VANTAGE_KEY
+        print(url)
+        url = url.replace("%2C", ",")
         payload = {}
         headers = {'User-Agent': 'request'}
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")

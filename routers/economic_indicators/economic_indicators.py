@@ -30,7 +30,7 @@ async def REAL_GDP(request: Request, user: userPayload = Depends(get_user_info))
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/REAL_GDP_PER_CAPITA/query', status_code=status.HTTP_200_OK)
@@ -45,7 +45,7 @@ async def REAL_GDP_PER_CAPITA(request: Request, user: userPayload = Depends(get_
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TREASURY_YIELD/query', status_code=status.HTTP_200_OK)
@@ -60,7 +60,7 @@ async def TREASURY_YIELD(request: Request, user: userPayload = Depends(get_user_
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/FEDERAL_FUNDS_RATE/query', status_code=status.HTTP_200_OK)
@@ -75,7 +75,7 @@ async def FEDERAL_FUNDS_RATE(request: Request, user: userPayload = Depends(get_u
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/CPI/query', status_code=status.HTTP_200_OK)
@@ -90,7 +90,7 @@ async def CPI(request: Request, user: userPayload = Depends(get_user_info)):
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/INFLATION/query', status_code=status.HTTP_200_OK)
@@ -105,7 +105,7 @@ async def INFLATION(request: Request, user: userPayload = Depends(get_user_info)
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/RETAIL_SALES/query', status_code=status.HTTP_200_OK)
@@ -120,7 +120,7 @@ async def RETAIL_SALES(request: Request, user: userPayload = Depends(get_user_in
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/DURABLES/query', status_code=status.HTTP_200_OK)
@@ -135,7 +135,7 @@ async def DURABLES(request: Request, user: userPayload = Depends(get_user_info))
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/UNEMPLOYMENT/query', status_code=status.HTTP_200_OK)
@@ -150,7 +150,7 @@ async def UNEMPLOYMENT(request: Request, user: userPayload = Depends(get_user_in
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/NONFARM_PAYROLL/query', status_code=status.HTTP_200_OK)
@@ -165,4 +165,4 @@ async def NONFARM_PAYROLL(request: Request, user: userPayload = Depends(get_user
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")

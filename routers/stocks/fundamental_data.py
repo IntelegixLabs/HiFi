@@ -30,7 +30,7 @@ async def OVERVIEW(request: Request, user: userPayload = Depends(get_user_info))
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/INCOME_STATEMENT/query', status_code=status.HTTP_200_OK)
@@ -45,7 +45,7 @@ async def INCOME_STATEMENT(request: Request, user: userPayload = Depends(get_use
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/BALANCE_SHEET/query', status_code=status.HTTP_200_OK)
@@ -60,7 +60,7 @@ async def BALANCE_SHEET(request: Request, user: userPayload = Depends(get_user_i
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/CASH_FLOW/query', status_code=status.HTTP_200_OK)
@@ -75,7 +75,7 @@ async def CASH_FLOW(request: Request, user: userPayload = Depends(get_user_info)
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/EARNINGS/query', status_code=status.HTTP_200_OK)
@@ -90,7 +90,7 @@ async def EARNINGS(request: Request, user: userPayload = Depends(get_user_info))
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/LISTING_STATUS/query', status_code=status.HTTP_200_OK)
@@ -105,7 +105,7 @@ async def LISTING_STATUS(request: Request, user: userPayload = Depends(get_user_
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/EARNINGS_CALENDAR/query', status_code=status.HTTP_200_OK)
@@ -120,7 +120,7 @@ async def EARNINGS_CALENDAR(request: Request, user: userPayload = Depends(get_us
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/IPO_CALENDAR/query', status_code=status.HTTP_200_OK)
@@ -135,4 +135,4 @@ async def IPO_CALENDAR(request: Request, user: userPayload = Depends(get_user_in
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")

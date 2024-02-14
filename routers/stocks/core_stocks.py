@@ -30,7 +30,7 @@ async def SYMBOL_SEARCH(request: Request, user: userPayload = Depends(get_user_i
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TIME_SERIES_INTRADAY/query', status_code=status.HTTP_200_OK)
@@ -45,7 +45,7 @@ async def TIME_SERIES_INTRADAY(request: Request, user: userPayload = Depends(get
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TIME_SERIES_DAILY/query', status_code=status.HTTP_200_OK)
@@ -60,7 +60,7 @@ async def TIME_SERIES_DAILY(request: Request, user: userPayload = Depends(get_us
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TIME_SERIES_WEEKLY/query', status_code=status.HTTP_200_OK)
@@ -75,7 +75,7 @@ async def TIME_SERIES_WEEKLY(request: Request, user: userPayload = Depends(get_u
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TIME_SERIES_WEEKLY_ADJUSTED/query', status_code=status.HTTP_200_OK)
@@ -90,7 +90,7 @@ async def TIME_SERIES_WEEKLY_ADJUSTED(request: Request, user: userPayload = Depe
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TIME_SERIES_MONTHLY/query', status_code=status.HTTP_200_OK)
@@ -105,7 +105,7 @@ async def TIME_SERIES_MONTHLY(request: Request, user: userPayload = Depends(get_
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/TIME_SERIES_MONTHLY_ADJUSTED/query', status_code=status.HTTP_200_OK)
@@ -120,7 +120,7 @@ async def TIME_SERIES_MONTHLY_ADJUSTED(request: Request, user: userPayload = Dep
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/GLOBAL_QUOTE/query', status_code=status.HTTP_200_OK)
@@ -135,7 +135,7 @@ async def GLOBAL_QUOTE(request: Request, user: userPayload = Depends(get_user_in
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/MARKET_STATUS/query', status_code=status.HTTP_200_OK)
@@ -150,4 +150,4 @@ async def MARKET_STATUS(request: Request, user: userPayload = Depends(get_user_i
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")

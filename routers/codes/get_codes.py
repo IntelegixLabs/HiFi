@@ -24,7 +24,7 @@ async def currency_codes(user: userPayload = Depends(get_user_info)):
             response.append(row)
         return response
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/crypto_currency_codes', status_code=status.HTTP_200_OK)
@@ -40,4 +40,4 @@ async def crypto_currency_codes(user: userPayload = Depends(get_user_info)):
             response.append(row)
         return response
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")

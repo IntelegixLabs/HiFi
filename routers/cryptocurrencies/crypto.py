@@ -30,7 +30,7 @@ async def DIGITAL_CURRENCY_EXCHANGE_RATE(request: Request, user: userPayload = D
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/CRYPTO_INTRADAY/query', status_code=status.HTTP_200_OK)
@@ -45,7 +45,7 @@ async def CRYPTO_INTRADAY(request: Request, user: userPayload = Depends(get_user
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/DIGITAL_CURRENCY_DAILY/query', status_code=status.HTTP_200_OK)
@@ -60,7 +60,7 @@ async def DIGITAL_CURRENCY_DAILY(request: Request, user: userPayload = Depends(g
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/DIGITAL_CURRENCY_WEEKLY/query', status_code=status.HTTP_200_OK)
@@ -75,7 +75,7 @@ async def DIGITAL_CURRENCY_WEEKLY(request: Request, user: userPayload = Depends(
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
 
 
 @router.get('/DIGITAL_CURRENCY_MONTHLY/query', status_code=status.HTTP_200_OK)
@@ -90,4 +90,4 @@ async def DIGITAL_CURRENCY_MONTHLY(request: Request, user: userPayload = Depends
         response = requests.request("GET", url, headers=headers, data=payload)
         return response.json()
     except Exception as err:
-        return {"message": f"Module - Error - {err}"}, status.HTTP_400_BAD_REQUEST
+        raise HTTPException(status_code=400, detail=f"Module - Error - {err}")
