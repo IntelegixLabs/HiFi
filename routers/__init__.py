@@ -5,3 +5,4 @@ from routers.cryptocurrencies import crypto
 from routers.commodities import commodities
 from routers.economic_indicators import economic_indicators
 from routers.news_insights import news_insights
+from routers.codes import get_codes

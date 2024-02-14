@@ -11,6 +11,7 @@ from routers import userProfile
 from routers.auth import get_user_info
 from schemas import userPayload
 
+from routers.codes import get_codes
 from routers.stocks import core_stocks, fundamental_data
 from routers.forex import forex
 from routers.cryptocurrencies import crypto
@@ -50,6 +51,7 @@ async def root(user: userPayload = Depends(get_user_info)):
 
 app.include_router(userProfile.router)
 
+app.include_router(get_codes.router)
 app.include_router(core_stocks.router)
 app.include_router(fundamental_data.router)
 app.include_router(forex.router)
