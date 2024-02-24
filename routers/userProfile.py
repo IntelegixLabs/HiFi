@@ -25,6 +25,11 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
+@router.get("/get_user_data")
+async def root(user: userPayload = Depends(get_user_info)):
+    return user
+
+
 @router.get('/get_profile', status_code=status.HTTP_200_OK)
 async def get_user_profile(db: db_dependency, user: userPayload = Depends(get_user_info)):
     if user is None:
