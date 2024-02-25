@@ -19,6 +19,7 @@ from routers.commodities import commodities
 from routers.economic_indicators import economic_indicators
 from routers.news_insights import news_insights
 from routers.technical_indicators import technical_indicators
+from routers.payments import payments
 
 
 load_dotenv()
@@ -61,6 +62,7 @@ app.include_router(commodities.router)
 app.include_router(economic_indicators.router)
 app.include_router(news_insights.router)
 app.include_router(technical_indicators.router)
+app.include_router(payments.router)
 
 if __name__ == '__main__':
     uvicorn.run("main:app", host=os.getenv("HIFI_APP_HOST", "localhost"), port=int(os.getenv("HIFI_APP_PORT", 5000)),
