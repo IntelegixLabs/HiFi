@@ -4,13 +4,13 @@ volumes:
   pipeline:
     driver: local
 networks:
-  kong-net:
-    name: kong-net
+  intelegix-lab-net:
+    name: intelegix-lab-net
     driver: bridge
 
 services:
-  kong_database:
-    image: postgres:13.0
+  database:
+    image: postgres:latest
     ports:
       - 5432:5432
     environment:
@@ -18,12 +18,25 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     container_name:
-      kong_database
+      database
     networks:
-      - kong-net
-
+      - intelegix-lab-net
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    networks:
+      - intelegix-lab-net
+    depends_on:
+      - database
   kong_gateway:
-    image: kong/kong-gateway:3.5.0.2
+    image: kong/kong-gateway:latest
     container_name: kong_gateway
     ports:
       - 8000:8000
@@ -37,8 +50,8 @@ services:
     environment:
       - KONG_DATABASE=${KONG_DATABASE}
       - KONG_PG_HOST=${KONG_PG_HOST} # docker container name
-      - KONG_PG_USER=${KONG_PG_USER}
-      - KONG_PG_PASSWORD=${KONG_PG_PASSWORD}
+      - KONG_PG_USER=${POSTGRES_USER}
+      - KONG_PG_PASSWORD=${POSTGRES_PASSWORD}
       - KONG_PASSWORD=${KONG_PASSWORD}
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
       - KONG_ADMIN_ACCESS_LOG=/dev/stdout
@@ -46,44 +59,74 @@ services:
       - KONG_ADMIN_ERROR_LOG=/dev/stderr
       - KONG_ADMIN_LISTEN=${KONG_ADMIN_LISTEN}
       - KONG_ADMIN_GUI_URL=${KONG_ADMIN_GUI_URL}
-
     command: sh -c "kong migrations bootstrap && kong start"
     networks:
-      - kong-net
+      - intelegix-lab-net
     depends_on:
-      - kong_database
+      - database
   konga_web:
     image: pantsel/konga
     container_name: konga_web
     ports:
       - 1337:1337
     networks:
-      - kong-net
+      - intelegix-lab-net
     environment:
       NODE_ENV: ${NODE_ENV}
       TOKEN_SECRET: ${TOKEN_SECRET}
     depends_on:
-      - kong_database
+      - database
       - kong_gateway
   keycloak:
-    image: quay.io/keycloak/keycloak:23.0.6
+    image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
     ports:
       - 8080:8080
     environment:
+      DB_VENDOR: ${POSTGRES_DB}
+      DB_ADDR: ${POSTGRES_DB}
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-    command: [ "kc.bat start-dev" ]
+    command: "start-dev"
     networks:
-      - kong-net
+      - intelegix-lab-net
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - /path/to/local/dаta:/root/redis
+      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PASSWORD=my-password
+      - REDIS_PORT=6379
+      - REDIS_DATABASES=16
+    networks:
+      - intelegix-lab-net
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      REDIS_HOSTS: redis
+      REDIS_HOST: redis
+      REDIS_PORT: redis:6379
+      REDIS_PASSWORD: my-password
+      HTTP_USER: root
+      HTTP_PASSWORD: root
+    ports:
+      - 8081:8081
   zipkin:
-    image: openzipkin/zipkin:3.0
+    image: openzipkin/zipkin:latest
     container_name: zipkin
     ports:
       - 9411:9411
     restart: unless-stopped
     networks:
-      - kong-net
+      - intelegix-lab-net
   elasticsearch:
     image: elasticsearch:8.12.0
     container_name: elasticsearch
@@ -91,7 +134,7 @@ services:
       - 9200:9200
       - 9300:9300
     networks:
-      - kong-net
+      - intelegix-lab-net
     restart: always
     environment:
       ES_JAVA_OPTS: -Xms1024m -Xmx1024m
@@ -104,7 +147,7 @@ services:
       - 5044:5044
       - 9600:9600
     networks:
-      - kong-net
+      - intelegix-lab-net
     restart: always
     depends_on:
       - elasticsearch
@@ -118,43 +161,116 @@ services:
     ports:
       - 5601:5601
     networks:
-      - kong-net
+      - intelegix-lab-net
     restart: always
     environment:
       ELASTICSEARCH_URL: ${ELASTICSEARCH_URL}
   prometheus:
-    image: prom/prometheus:v2.22.0
+    image: prom/prometheus:latest
     container_name: prometheus
     ports:
       - 9090:9090
     networks:
-      - kong-net
+      - intelegix-lab-net
     restart: always
   grafana:
-    image: grafana/grafana:7.2.2
+    image: grafana/grafana:latest
     ports:
       - 3000:3000
     restart: always
     networks:
-      - kong-net
-
-
-  hifi_web:
-    container_name: hifi_web
-    build:
-      context: .
-      dockerfile: Dockerfile
-    stdin_open: true
-    tty: true
+      - intelegix-lab-net
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - 5000:5000
-    networks:
-      - kong-net
-    env_file:
-      - .env
-    volumes:
-      - .:/app
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+  # kafka single node
+  kafka1:
+    image: wurstmeister/kafka:latest
+    restart: "no"
+    links:
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://:29092,EXTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      #https://github.com/wurstmeister/kafka-docker/issues/553
+  kafka2:
+    image: wurstmeister/kafka:latest
+    restart: "no"
+    links:
+      - zookeeper
+    ports:
+      - 9093:9093
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://:29093,EXTERNAL://:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29093,EXTERNAL://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+  #kafdrop for topic/msg visualization
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    restart: "no"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka1:29092,kafka2:29093"
+      # JVM_OPTS: "-Xms16M -Xmx512M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    ports:
+      - 9000:9000
     depends_on:
-      - keycloak
-      - kong_database
-      - kong_gateway
+      - kafka1
+      - kafka2
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "4318:4318"
+    environment:
+      - LOG_LEVEL=debug
+    networks:
+      - intelegix-lab-net
+  hotrod:
+    image: jaegertracing/example-hotrod:latest
+    # To run the latest trunk build, find the tag at Docker Hub and use the line below
+    # https://hub.docker.com/r/jaegertracing/example-hotrod-snapshot/tags
+    #image: jaegertracing/example-hotrod-snapshot:0ab8f2fcb12ff0d10830c1ee3bb52b745522db6c
+    ports:
+      - "8087:8087"
+      - "8083:8083"
+    command: [ "all" ]
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318
+    networks:
+      - intelegix-lab-net
+    depends_on:
+      - jaeger
+#  hifi_web:
+#    container_name: hifi_web
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    stdin_open: true
+#    tty: true
+#    ports:
+#      - 5000:5000
+#    networks:
+#      - intelegix-lab-net
+#    env_file:
+#      - .env
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - keycloak
+#      - database
+#      - kong_gateway
