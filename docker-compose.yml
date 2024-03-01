@@ -90,6 +90,10 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+#      KC_DB: postgres
+#      KC_DB_USERNAME: ${KONG_PG_USER}
+#      KC_DB_PASSWORD: ${KONG_PG_PASSWORD}
+#      KC_DB_URL: jdbc:postgresql://${KONG_PG_HOST}/${POSTGRES_DB}
     command: "start-dev"
     networks:
       - intelegix-lab-net
