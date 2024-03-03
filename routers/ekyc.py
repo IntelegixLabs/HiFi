@@ -78,6 +78,8 @@ async def upload_extract_pan_data(db: db_dependency, file: UploadFile = File(), 
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.get("/ekyc")
-async def video_endpoint():
+@router.get("/video_kyc")
+async def video_endpoint(user: userPayload = Depends(get_user_info)):
+    if user is None:
+        raise HTTPException(status_code=401, detail='Authentication Failed')
     return StreamingResponse(video_stream(), media_type="multipart/x-mixed-replace; boundary=frame")
