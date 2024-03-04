@@ -4,6 +4,7 @@ import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from config.database import engine
 from models import Base
@@ -50,6 +51,8 @@ def health_check():
 async def root(user: userPayload = Depends(get_user_info)):
     return {"message": f"Hello {user.username} you have the following service: {user.realm_roles}"}
 
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(userProfile.router)
 
