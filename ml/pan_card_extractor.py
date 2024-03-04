@@ -1,6 +1,7 @@
 import cv2
 import regex as re
 import easyocr
+import warnings
 
 
 class Pan_Info_Extractor:
@@ -11,7 +12,6 @@ class Pan_Info_Extractor:
         self.Name = None
         self.image = None
         try:
-            import warnings
             warnings.filterwarnings('ignore')
             self.reader = easyocr.Reader(['en'])
         except ImportError:
