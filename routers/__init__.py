@@ -9,3 +9,4 @@ from routers.codes import get_codes
 from routers.technical_indicators import technical_indicators
 from routers import ekyc
 from routers.admin import pricing
+from routers.payments import stripe

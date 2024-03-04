@@ -17,6 +17,37 @@ Swagger UI `http://localhost:5000/docs`
 
 Run `uvicorn main:app --reload`
 
+
+#### Listen to Stripe events
+
+<span>Use Stripe CLI to simulate Stripe events in your local environment or <a href="https://stripe.com/docs/webhooks" target="__blank" rel="noopener noreferrer">learn more about Webhooks</a>.</span>
+
+1. <span><a href="https://stripe.com/docs/stripe-cli" target="__blank" rel="noopener noreferrer">Download the CLI</a> and log in with your Stripe account</span>
+
+```commandline
+stripe login
+```
+
+2. Forward events to your webhook
+
+```commandline
+stripe listen --forward-to localhost:5000/payments/stripe/webhook
+```
+
+3. Trigger events with the CLI
+
+```commandline
+stripe trigger payment_intent.succeeded
+
+stripe trigger subscription_schedule.canceled
+
+stripe trigger invoice.upcoming
+
+stripe trigger charge.captured
+
+stripe trigger invoice.payment_succeeded
+```
+
 ## 3. Running the Test Cases
 
 ```sh
@@ -31,6 +62,8 @@ $ cd HiFi
 $ docker system prune 
 $ docker-compose -f docker-compose.yml up -d --build
 ```
+
+
 
 ## 5. Getting Started With UI Application
 

@@ -46,6 +46,7 @@ async def add_pricing(db: db_dependency, subscription_data: subscriptionPricingS
         add_subscription_model = subscriptionPricingModel(
             name=subscription_data.name,
             price=subscription_data.price,
+            currencyCode=subscription_data.currencyCode,
             discount=subscription_data.discount,
             duration=subscription_data.duration,
             description=subscription_data.description,

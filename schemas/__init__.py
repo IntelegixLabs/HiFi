@@ -2,3 +2,4 @@ from schemas.userPayload import userPayload
 from schemas.authConfiguration import authConfiguration
 from schemas.userProfileSchema import userProfileSchema, userProfileDeleteSchema
 from schemas.subscriptionPricingSchema import subscriptionPricingSchema
+from schemas.paymentSchema import paymentSchema

@@ -22,6 +22,7 @@ from routers.news_insights import news_insights
 from routers.technical_indicators import technical_indicators
 from routers.admin import pricing
 from routers import ekyc
+from routers.payments import stripe
 
 
 load_dotenv()
@@ -69,6 +70,7 @@ app.include_router(technical_indicators.router)
 app.include_router(ekyc.router)
 
 app.include_router(pricing.router)
+app.include_router(stripe.router)
 
 if __name__ == '__main__':
     uvicorn.run("main:app", host=os.getenv("HIFI_APP_HOST", "localhost"), port=int(os.getenv("HIFI_APP_PORT", 5000)),
