@@ -8,6 +8,7 @@ from config.database import SessionLocal
 from .auth import get_user_info
 from schemas.userProfileSchema import userProfileSchema
 from schemas.userPayload import userPayload
+from datetime import datetime
 
 router = APIRouter(
     prefix='/user_profile',
@@ -77,6 +78,7 @@ async def update_user_profile(db: db_dependency, user_profile_data: userProfileS
         user_profile_model.phoneNumber = user_profile_data.phoneNumber
         user_profile_model.gender = user_profile_data.gender
         user_profile_model.dob = user_profile_data.dob
+        user_profile_model.updatedAt = datetime.now()
 
         db.add(user_profile_model)
         db.commit()
@@ -94,6 +96,8 @@ async def delete_user_profile(db: db_dependency, user: userPayload = Depends(get
             raise HTTPException(status_code=404, detail='Profile not found.')
 
         user_profile_model.isDeleted = True
+        user_profile_model.updatedAt = datetime.now()
+
         db.add(user_profile_model)
         db.commit()
     except Exception as err:
@@ -112,6 +116,8 @@ async def reactivate_user_profile(db: db_dependency, user: userPayload = Depends
             raise HTTPException(status_code=404, detail='Profile not found.')
 
         user_profile_model.isDeleted = False
+        user_profile_model.updatedAt = datetime.now()
+
         db.add(user_profile_model)
         db.commit()
     except Exception as err:

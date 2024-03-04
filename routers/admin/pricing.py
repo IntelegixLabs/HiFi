@@ -92,6 +92,8 @@ async def delete_pricing(db: db_dependency, user: userPayload = Depends(get_user
             raise HTTPException(status_code=404, detail='Subscription Pricing not found.')
 
         subscription_model.isDeleted = True
+        subscription_model.updatedAt = datetime.now()
+
         db.add(subscription_model)
         db.commit()
     except Exception as err:
@@ -109,6 +111,8 @@ async def reactivate_pricing(db: db_dependency, user: userPayload = Depends(get_
             raise HTTPException(status_code=404, detail='Profile not found.')
 
         subscription_model.isDeleted = False
+        subscription_model.updatedAt = datetime.now()
+
         db.add(subscription_model)
         db.commit()
     except Exception as err:
