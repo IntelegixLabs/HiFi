@@ -134,11 +134,12 @@ async def webhook(db: db_dependency, request: Request):
     payment_model = db.query(paymentModel).filter(
         paymentModel.paymentIntentId == intent).first()
 
-    print(payment_model)
     if payment_model is None:
         raise HTTPException(status_code=404, detail='Payment Intent not found.')
 
     payment_model.status = intent_Type
+    payment_model.updatedAt = datetime.now()
+
     user_id = payment_model.userId
     days_valid = payment_model.days_valid
 
@@ -160,6 +161,8 @@ async def webhook(db: db_dependency, request: Request):
         validity = str((modified_date[0]) + " " + str(date[1]))
 
         user_model.expDate = validity
+        user_model.updatedAt = datetime.now()
+
         db.add(payment_model)
         db.commit()
 

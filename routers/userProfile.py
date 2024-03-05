@@ -7,7 +7,7 @@ from models import userProfileModel, profileImageModel
 from config.database import SessionLocal
 from .auth import get_user_info
 from schemas.userProfileSchema import userProfileSchema
-from schemas.userPayload import userPayload
+from schemas.userPayload import userPayload, userCompleteData
 from datetime import datetime
 
 router = APIRouter(
@@ -27,9 +27,41 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-@router.get("/get_user_data")
-async def root(user: userPayload = Depends(get_user_info)):
-    return user
+@router.get("/get_user_data", status_code=status.HTTP_200_OK)
+async def root(db: db_dependency, user: userPayload = Depends(get_user_info)) -> userCompleteData:
+    try:
+        if user is None:
+            raise HTTPException(status_code=401, detail='Authentication Failed')
+        user_model = db.query(userProfileModel).filter(userProfileModel.userId == user.id).filter(
+            userProfileModel.isDeleted == False).first()
+
+        if user_model is None:
+            raise HTTPException(status_code=404, detail='Profile not found.')
+
+        current_date = str(datetime.now())
+
+        isPremium = (user_model.expDate > current_date)
+
+        userdata = userCompleteData(
+            id=user.id,
+            username=user.username,
+            email=user.email,
+            first_name=user.first_name,
+            last_name=user.last_name,
+            phoneNumber=user_model.phoneNumber,
+            gender=user_model.phoneNumber,
+            dob=user_model.dob,
+            isPremium=isPremium,
+            expDate=user_model.expDate,
+            isDeleted=user_model.isDeleted,
+            updatedAt=user_model.updatedAt,
+            createdAt=user_model.createdAt,
+            realm_roles=user.realm_roles,
+            client_roles=user.client_roles
+        )
+        return userdata
+    except Exception as err:
+        raise HTTPException(status_code=401, detail=err)
 
 
 @router.get('/get_profile', status_code=status.HTTP_200_OK)
@@ -46,7 +78,6 @@ async def get_user_profile(db: db_dependency, user: userPayload = Depends(get_us
 @router.post("/add_profile", status_code=status.HTTP_201_CREATED)
 async def create_user_profile(db: db_dependency, user_profile_data: userProfileSchema,
                               user: userPayload = Depends(get_user_info)):
-
     try:
         if user is None:
             raise HTTPException(status_code=401, detail='Authentication failed')
@@ -66,7 +97,6 @@ async def create_user_profile(db: db_dependency, user_profile_data: userProfileS
 @router.put("/update_profile/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_user_profile(db: db_dependency, user_profile_data: userProfileSchema,
                               user: userPayload = Depends(get_user_info), profile_id: str = Path):
-
     try:
         if user is None:
             raise HTTPException(status_code=401, detail='Authentication failed')
@@ -107,7 +137,6 @@ async def delete_user_profile(db: db_dependency, user: userPayload = Depends(get
 @router.patch("/reactivate_profile/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def reactivate_user_profile(db: db_dependency, user: userPayload = Depends(get_user_info),
                                   profile_id: str = Path):
-
     try:
         if user is None:
             raise HTTPException(status_code=401, detail='Authentication failed')
@@ -125,7 +154,8 @@ async def reactivate_user_profile(db: db_dependency, user: userPayload = Depends
 
 
 @router.post("/upload_profile_image", status_code=status.HTTP_201_CREATED)
-async def upload_profile_image(db: db_dependency, file: UploadFile = File(), user: userPayload = Depends(get_user_info)):
+async def upload_profile_image(db: db_dependency, file: UploadFile = File(),
+                               user: userPayload = Depends(get_user_info)):
     try:
         if user is None:
             raise HTTPException(status_code=401, detail='Authentication Failed')

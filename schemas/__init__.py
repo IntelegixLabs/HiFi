@@ -1,4 +1,4 @@
-from schemas.userPayload import userPayload
+from schemas.userPayload import userPayload, userCompleteData
 from schemas.authConfiguration import authConfiguration
 from schemas.userProfileSchema import userProfileSchema, userProfileDeleteSchema
 from schemas.subscriptionPricingSchema import subscriptionPricingSchema
