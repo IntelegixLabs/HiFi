@@ -3,12 +3,13 @@ from typing import Annotated
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, HTTPException, Request
 from starlette import status
-from models import paymentModel, subscriptionPricingModel
+from models import paymentModel, subscriptionPricingModel, userProfileModel
 from config.database import SessionLocal
 from ..auth import get_user_info
 from schemas.userPayload import userPayload
 from schemas.paymentSchema import paymentSchema
 import stripe
+from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 
@@ -58,7 +59,8 @@ async def create_payment_intent(db: db_dependency, payment_data: paymentSchema,
             userId=user.id,
             subscription_id=payment_data.id,
             totalAmount=float(payment_intent.amount/100),
-            PaymentIntentId=payment_intent.id
+            days_valid=subscription_model.duration,
+            paymentIntentId=payment_intent.id
         )
 
         db.add(payment_model)
@@ -100,9 +102,22 @@ async def webhook(db: db_dependency, request: Request):
     # You can also perform different actions based on the event type
     # For example, you can send an email confirmation, update your database, etc.
     # For a list of possible event types, see https://stripe.com/docs/api/events/types
+
+    intent = event['data']['object']
+    intent = str(intent.id)
+    intent_Type = "Pending"
     if event['type'] == 'payment_intent.succeeded':
         payment_intent = event['data']['object']
+        intent_Type = "Payment Received"
         print("PaymentIntent was successful:", payment_intent.id)
+    if event['type'] == 'payment_intent.created':
+        payment_created = event['data']['object']
+        intent_Type = "Payment Received"  # Needs to change
+        print("PaymentIntent was created:", payment_created.id)
+    elif event['type'] == 'payment_intent.payment_failed':
+        payment_failed = event['data']['object']
+        intent_Type = "Payment Failed"
+        print("PaymentIntent was Failed:", payment_failed.id)
     elif event['type'] == 'subscription_schedule.canceled':
         subscription_schedule = event['data']['object']
         print("subscription_schedule was cancelled:", subscription_schedule.id)
@@ -115,6 +130,38 @@ async def webhook(db: db_dependency, request: Request):
     # ... handle other event types
     else:
         print("Unhandled event type:", event.type)
+
+    payment_model = db.query(paymentModel).filter(
+        paymentModel.paymentIntentId == intent).first()
+
+    print(payment_model)
+    if payment_model is None:
+        raise HTTPException(status_code=404, detail='Payment Intent not found.')
+
+    payment_model.status = intent_Type
+    user_id = payment_model.userId
+    days_valid = payment_model.days_valid
+
+    db.add(payment_model)
+    db.commit()
+
+    now = datetime.now()
+
+    if intent_Type == "Payment Received":
+        user_model = db.query(userProfileModel).filter(
+            userProfileModel.userId == user_id).first()
+        if user_model is None:
+            raise HTTPException(status_code=404, detail='User Not Found')
+
+        date = str(now).split(" ")
+        date_split = datetime.strptime(date[0], "%Y-%m-%d")
+        modified_date = date_split + timedelta(days=days_valid)
+        modified_date = str(modified_date).split(" ")
+        validity = str((modified_date[0]) + " " + str(date[1]))
+
+        user_model.expDate = validity
+        db.add(payment_model)
+        db.commit()
 
     # Return a success response
     return {"status": "success"}
