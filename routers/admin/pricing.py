@@ -11,7 +11,7 @@ from schemas.userPayload import userPayload
 from datetime import datetime
 
 router = APIRouter(
-    prefix='/admin/pricing',
+    prefix='/admin',
     tags=['Admin API For Subscription Pricing']
 )
 
@@ -27,7 +27,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-@router.get('/get_pricing', status_code=status.HTTP_200_OK)
+@router.get('/pricing', status_code=status.HTTP_200_OK)
 async def get_pricing(db: db_dependency, user: userPayload = Depends(get_user_info)):
     try:
         if user is None:
@@ -37,7 +37,7 @@ async def get_pricing(db: db_dependency, user: userPayload = Depends(get_user_in
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.post("/add_pricing", status_code=status.HTTP_201_CREATED)
+@router.post("/pricing", status_code=status.HTTP_201_CREATED)
 async def add_pricing(db: db_dependency, subscription_data: subscriptionPricingSchema,
                       user: userPayload = Depends(get_user_info)):
     try:
@@ -58,7 +58,7 @@ async def add_pricing(db: db_dependency, subscription_data: subscriptionPricingS
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.put("/update_pricing/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/pricing/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_pricing(db: db_dependency, subscription_data: subscriptionPricingSchema,
                          user: userPayload = Depends(get_user_info), id: str = Path):
     try:
@@ -83,7 +83,7 @@ async def update_pricing(db: db_dependency, subscription_data: subscriptionPrici
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.delete("/delete_pricing/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/pricing/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_pricing(db: db_dependency, user: userPayload = Depends(get_user_info), id: str = Path):
     try:
         if user is None:
@@ -101,7 +101,7 @@ async def delete_pricing(db: db_dependency, user: userPayload = Depends(get_user
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.patch("/reactivate_pricing/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.patch("/pricing/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def reactivate_pricing(db: db_dependency, user: userPayload = Depends(get_user_info),
                              id: str = Path):
     try:

@@ -11,7 +11,7 @@ from schemas.userPayload import userPayload, userCompleteData
 from datetime import datetime
 
 router = APIRouter(
-    prefix='/user_profile',
+    prefix='/profile',
     tags=['User Profile']
 )
 
@@ -27,7 +27,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-@router.get("/get_user_data", status_code=status.HTTP_200_OK)
+@router.get("/1", status_code=status.HTTP_200_OK)
 async def root(db: db_dependency, user: userPayload = Depends(get_user_info)) -> userCompleteData:
     try:
         if user is None:
@@ -64,7 +64,7 @@ async def root(db: db_dependency, user: userPayload = Depends(get_user_info)) ->
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.get('/get_profile', status_code=status.HTTP_200_OK)
+@router.get('/', status_code=status.HTTP_200_OK)
 async def get_user_profile(db: db_dependency, user: userPayload = Depends(get_user_info)):
     try:
         if user is None:
@@ -75,7 +75,7 @@ async def get_user_profile(db: db_dependency, user: userPayload = Depends(get_us
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.post("/add_profile", status_code=status.HTTP_201_CREATED)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user_profile(db: db_dependency, user_profile_data: userProfileSchema,
                               user: userPayload = Depends(get_user_info)):
     try:
@@ -94,7 +94,7 @@ async def create_user_profile(db: db_dependency, user_profile_data: userProfileS
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.put("/update_profile/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.put("/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_user_profile(db: db_dependency, user_profile_data: userProfileSchema,
                               user: userPayload = Depends(get_user_info), profile_id: str = Path):
     try:
@@ -116,7 +116,7 @@ async def update_user_profile(db: db_dependency, user_profile_data: userProfileS
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.delete("/delete_profile/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user_profile(db: db_dependency, user: userPayload = Depends(get_user_info), profile_id: str = Path):
     try:
         if user is None:
@@ -134,7 +134,7 @@ async def delete_user_profile(db: db_dependency, user: userPayload = Depends(get
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.patch("/reactivate_profile/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.patch("/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def reactivate_user_profile(db: db_dependency, user: userPayload = Depends(get_user_info),
                                   profile_id: str = Path):
     try:
@@ -153,7 +153,7 @@ async def reactivate_user_profile(db: db_dependency, user: userPayload = Depends
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.post("/upload_profile_image", status_code=status.HTTP_201_CREATED)
+@router.post("/image", status_code=status.HTTP_201_CREATED)
 async def upload_profile_image(db: db_dependency, file: UploadFile = File(),
                                user: userPayload = Depends(get_user_info)):
     try:
@@ -185,7 +185,7 @@ async def upload_profile_image(db: db_dependency, file: UploadFile = File(),
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.get("/get_profile_image", status_code=status.HTTP_200_OK)
+@router.get("/image", status_code=status.HTTP_200_OK)
 async def get_profile_image(db: db_dependency, user: userPayload = Depends(get_user_info)):
     try:
         if user is None:

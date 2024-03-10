@@ -44,12 +44,12 @@ app.add_middleware(
 Base.metadata.create_all(bind=engine)
 
 
-@app.get("/healthy")
+@app.get("/status/health")
 def health_check():
     return {'status': 'Healthy'}
 
 
-@app.get("/secure")
+@app.get("/status/security-check")
 async def root(user: userPayload = Depends(get_user_info)):
     return {"message": f"Hello {user.username} you have the following service: {user.realm_roles}"}
 
