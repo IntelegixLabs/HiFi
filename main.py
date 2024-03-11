@@ -4,6 +4,7 @@ import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from config.database import engine
 from models import Base
@@ -19,6 +20,8 @@ from routers.commodities import commodities
 from routers.economic_indicators import economic_indicators
 from routers.news_insights import news_insights
 from routers.technical_indicators import technical_indicators
+from routers.admin import pricing
+from routers import ekyc
 
 
 load_dotenv()
@@ -50,6 +53,8 @@ async def root(user: userPayload = Depends(get_user_info)):
     return {"message": f"Hello {user.username} you have the following service: {user.realm_roles}"}
 
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 app.include_router(userProfile.router)
 
 app.include_router(get_codes.router)
@@ -61,6 +66,9 @@ app.include_router(commodities.router)
 app.include_router(economic_indicators.router)
 app.include_router(news_insights.router)
 app.include_router(technical_indicators.router)
+app.include_router(ekyc.router)
+
+app.include_router(pricing.router)
 
 if __name__ == '__main__':
     uvicorn.run("main:app", host=os.getenv("HIFI_APP_HOST", "localhost"), port=int(os.getenv("HIFI_APP_PORT", 5000)),
