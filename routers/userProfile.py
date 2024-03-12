@@ -11,7 +11,7 @@ from schemas.userPayload import userPayload, userCompleteData
 from datetime import datetime
 
 router = APIRouter(
-    prefix='/',
+    prefix='',
     tags=['User Profile']
 )
 
