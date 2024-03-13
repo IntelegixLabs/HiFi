@@ -7,3 +7,5 @@ from routers.economic_indicators import economic_indicators
 from routers.news_insights import news_insights
 from routers.codes import get_codes
 from routers.technical_indicators import technical_indicators
+from routers import ekyc
+from routers.admin import pricing

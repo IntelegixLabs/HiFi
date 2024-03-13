@@ -1,0 +1,1 @@
+from ml.pan_card_extractor import Pan_Info_Extractor
