@@ -25,7 +25,6 @@ services:
       - ./postgres_data:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4:latest
-    restart: always
     ports:
       - "5050:80"
     environment:
@@ -97,9 +96,15 @@ services:
     command: "start-dev"
     networks:
       - intelegix-lab-net
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - intelegix-lab-net
   redis:
     image: redis:latest
-    restart: always
     ports:
       - "6379:6379"
     volumes:
@@ -113,7 +118,6 @@ services:
       - intelegix-lab-net
   redis-commander:
     image: rediscommander/redis-commander:latest
-    restart: always
     environment:
       REDIS_HOSTS: redis
       REDIS_HOST: redis
@@ -128,7 +132,6 @@ services:
     container_name: zipkin
     ports:
       - 9411:9411
-    restart: unless-stopped
     networks:
       - intelegix-lab-net
   elasticsearch:
@@ -139,7 +142,6 @@ services:
       - 9300:9300
     networks:
       - intelegix-lab-net
-    restart: always
     environment:
       ES_JAVA_OPTS: -Xms1024m -Xmx1024m
       discovery.type: single-node
@@ -152,7 +154,6 @@ services:
       - 9600:9600
     networks:
       - intelegix-lab-net
-    restart: always
     depends_on:
       - elasticsearch
     environment:
@@ -166,7 +167,6 @@ services:
       - 5601:5601
     networks:
       - intelegix-lab-net
-    restart: always
     environment:
       ELASTICSEARCH_URL: ${ELASTICSEARCH_URL}
   prometheus:
@@ -176,12 +176,10 @@ services:
       - 9090:9090
     networks:
       - intelegix-lab-net
-    restart: always
   grafana:
     image: grafana/grafana:latest
     ports:
       - 3000:3000
-    restart: always
     networks:
       - intelegix-lab-net
   zookeeper:
@@ -196,7 +194,6 @@ services:
   # kafka single node
   kafka1:
     image: wurstmeister/kafka:latest
-    restart: "no"
     links:
       - zookeeper
     ports:
@@ -211,7 +208,6 @@ services:
       #https://github.com/wurstmeister/kafka-docker/issues/553
   kafka2:
     image: wurstmeister/kafka:latest
-    restart: "no"
     links:
       - zookeeper
     ports:
@@ -226,7 +222,6 @@ services:
   #kafdrop for topic/msg visualization
   kafdrop:
     image: obsidiandynamics/kafdrop
-    restart: "no"
     environment:
       KAFKA_BROKERCONNECT: "kafka1:29092,kafka2:29093"
       # JVM_OPTS: "-Xms16M -Xmx512M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"

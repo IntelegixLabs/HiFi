@@ -30,7 +30,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 
-@router.get("/get_pan_card", status_code=status.HTTP_200_OK)
+@router.get("/pan-card", status_code=status.HTTP_200_OK)
 async def get_pan_card(db: db_dependency, user: userPayload = Depends(get_user_info)):
     try:
         if user is None:
@@ -45,7 +45,7 @@ async def get_pan_card(db: db_dependency, user: userPayload = Depends(get_user_i
         raise HTTPException(status_code=401, detail=err)
 
 
-@router.post("/upload_extract_pan_data", status_code=status.HTTP_200_OK)
+@router.post("/pan-card", status_code=status.HTTP_200_OK)
 async def upload_extract_pan_data(db: db_dependency, file: UploadFile = File(), user: userPayload = Depends(get_user_info)):
     try:
         if user is None:
