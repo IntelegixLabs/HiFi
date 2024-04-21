@@ -24,6 +24,7 @@ from routers.technical_indicators import technical_indicators
 from routers.admin import pricing
 from routers import ekyc
 from routers.payments import stripe
+from routers.generative_ai import generative_ai
 
 
 load_dotenv()
@@ -70,6 +71,7 @@ app.include_router(economic_indicators.router)
 app.include_router(news_insights.router)
 app.include_router(technical_indicators.router)
 app.include_router(ekyc.router)
+app.include_router(generative_ai.router)
 
 app.include_router(pricing.router)
 app.include_router(stripe.router)
