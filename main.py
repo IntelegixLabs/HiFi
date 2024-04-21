@@ -9,6 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from config.database import engine
 from models import Base
 from routers import userProfile
+from routers.users import userAdditionalData
 from routers.auth import get_user_info
 from schemas import userPayload
 
@@ -57,6 +58,7 @@ async def root(user: userPayload = Depends(get_user_info)):
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(userProfile.router)
+app.include_router(userAdditionalData.router)
 
 app.include_router(get_codes.router)
 app.include_router(core_stocks.router)
