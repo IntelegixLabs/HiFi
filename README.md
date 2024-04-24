@@ -71,6 +71,12 @@ $ docker-compose -f docker-compose.yml up -d --build
 
 ## 5. Getting Started With UI Application
 
+```sh
+$ git clone https://github.com/IntelegixLabs/HiFi_UI.git
+$ cd HiFi_UI
+$ npm i
+```
+
 
 ## 6. Project Requirements
 
