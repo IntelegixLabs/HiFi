@@ -4,6 +4,10 @@
 
 ## 1. Project Architecture
 
+<p align="center">
+  <img src="data/HiFi.png" />
+</p> 
+
 ## 2. Getting Started With The Fast API Application
 
 ```sh
