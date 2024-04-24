@@ -1,4 +1,4 @@
-![image](https://github.com/IntelegixLabs/HiFi/assets/34819268/6447dcaf-62fc-4292-aa1b-a21264411d1f)<h1 align="center">HiFi (Hitaya Finance)</h1>
+<h1 align="center">HiFi (Hitaya Finance)</h1>
 
 ### PROBLEM STATEMENT
 
