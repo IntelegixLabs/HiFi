@@ -2,6 +2,19 @@
 
 ### PROBLEM STATEMENT
 
+<strong> 1. Providing stock analytics data, news feeds, and event information. </strong>
+
+Gather stock fundamental details like about the company, quarter results, profit and loss, balance sheets cash flow  ratios, shareholding patterns, news about the company, and events. Using GenAI LLMs to make informed decisions.  Peer-to-peer stock comparison related to the same category.
+
+<strong> 2. Generating buy-sell decisions based on Market sentiments.</strong>
+
+User-defined questions to identify risk management based on input, leveraging LLMs based on the above company data  and user data to understand the current situation and predict the future price of the stock, and show whether the user should  buy, neutral, or sell the stock from user portfolio to minimize maximize the risk.
+
+
+
+
+
+
 ## 1. Project Architecture
 
 <p align="center">
