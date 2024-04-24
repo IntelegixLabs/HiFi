@@ -82,7 +82,7 @@ $ npm i
 
 <h4>Languages</h4>
 <ul>
-  <li>KeyCloak</li>
+  <li>KeyCloak 24.0.0</li>
   <li>Python 3.12.1</li>
 </ul>
 
