@@ -2,6 +2,10 @@
 
 ### PROBLEM STATEMENT
 
+In the current market, there aren't many applications that can explain the concept of Compound Interest to an average middle-class person, who has started to earn a bit of money, for most first-time earners, the stock market sounds like an alien concept, our application tries to make Investing easy, proving the user with detailed knowledge of Markets and stocks to invest, the Power of Compound Interest with the help of LLM, and our custom RAG Models that are being used in our Chatbots.
+
+<strong>HiFi</strong> is a financial application that helps make investing easier for first-time users. 
+
 <strong> 1. Providing stock analytics data, news feeds, and event information. </strong>
 
   Gather stock fundamental details like about the company, <strong>quarter results, profit and loss, balance sheets cash flow  ratios, shareholding patterns, news</strong> about the company, and events. <strong>Using GenAI LLMs to make informed decisions.  Peer-to-peer stock comparison</strong> related to the same category.
