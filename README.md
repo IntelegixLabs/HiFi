@@ -4,11 +4,12 @@
 
 <strong> 1. Providing stock analytics data, news feeds, and event information. </strong>
 
-Gather stock fundamental details like about the company, quarter results, profit and loss, balance sheets cash flow  ratios, shareholding patterns, news about the company, and events. Using GenAI LLMs to make informed decisions.  Peer-to-peer stock comparison related to the same category.
+  Gather stock fundamental details like about the company, <strong>quarter results, profit and loss, balance sheets cash flow  ratios, shareholding patterns, news</strong> about the company, and events. <strong>Using GenAI LLMs to make informed decisions.  Peer-to-peer stock comparison</strong> related to the same category.
 
 <strong> 2. Generating buy-sell decisions based on Market sentiments.</strong>
 
-User-defined questions to identify risk management based on input, leveraging LLMs based on the above company data  and user data to understand the current situation and predict the future price of the stock, and show whether the user should  buy, neutral, or sell the stock from user portfolio to minimize maximize the risk.
+  User-defined questions to <strong>identify risk management based on input</strong>, leveraging <strong>LLMs</strong> based on the above company data  and user data to understand the current situation and predict the <strong>future price of the stock, and show whether the user should  buy, neutral, or sell the stock from user portfolio to minimize maximize the risk.</strong>
+
 
 # Features 
 
@@ -21,11 +22,11 @@ User-defined questions to identify risk management based on input, leveraging LL
 - Option to automate trade from the wallet.
 - Connect with a broker.
 
-  # Advance Features
+# Advance Features
 
-  - Users can opt for premium plans to secure their data by using <strong> blockchain technology under the hood to make it decentralized and safeguard their information. </strong>
-  - LLMs for personalized recommendations and portfolio management, risk management using RAG models.
-  - Enabling follow trading for users who want to make trading data public that others can utilize to <strong>create/replicate trading strategies.</strong>
+- Users can opt for premium plans to secure their data by using <strong> blockchain technology under the hood to make it decentralized and safeguard their information. </strong>
+- LLMs for personalized recommendations and portfolio management, risk management using RAG models.
+- Enabling follow trading for users who want to make trading data public that others can utilize to <strong>create/replicate trading strategies.</strong>
 
 
 
