@@ -8,22 +8,25 @@ In the current market, there aren't many applications that can explain the conce
 
 <strong> 1. Providing stock analytics data, news feeds, and event information. </strong>
 
-  Gather stock fundamental details like about the company, <strong>quarter results, profit and loss, balance sheets cash flow  ratios, shareholding patterns, news</strong> about the company, and events. <strong>Using GenAI LLMs to make informed decisions.  Peer-to-peer stock comparison</strong> related to the same category.
+Gather stock fundamental details like about the company, <strong>quarter results, profit and loss, balance sheets cash flow  ratios, shareholding patterns, news</strong> about the company, and events. <strong>Using GenAI LLMs to make informed decisions.  Peer-to-peer stock comparison</strong> related to the same category.
 
 <strong> 2. Generating buy-sell decisions based on Market sentiments.</strong>
 
-  User-defined questions to <strong>identify risk management based on input</strong>, leveraging <strong>LLMs</strong> based on the above company data  and user data to understand the current situation and predict the <strong>future price of the stock, and show whether the user should  buy, neutral, or sell the stock from user portfolio to minimize maximize the risk.</strong>
+<strong>Identify risk management based on input</strong>, leveraging <strong>LLMs</strong> understanding current situation and predict future price of the stock and show whether <strong>user should  buy, hold, or sell the stock from user portfolio to minimize the risk</strong>.
 
+<strong> 3. Blockchain enabled security for premium customers.</strong>
+
+Users can opt for premium plans to secure their data by using <strong>blockchain technology under the hood to make it decentralized and safeguard their information</strong>.
 
 # Features 
 
 - Provide stock analytics data, news feeds, and event information.
-- Generating buy-sell decisions based on Market sentiments.
-- Generating buy-sell signals for intraday trades, and equity investments.
-- LLMs to minimize risk and maximize profit.
-- Kill switch option for intraday & F&O.
+- <strong>Generating buy-sell decisions</strong> based on Market sentiments.
+- <strong>Generating buy-sell signals</strong> for intraday trades, and equity investments.
+- <strong>LLMs to minimize risk and maximize profit</strong>.
+- <strong>Kill switch option</strong> for intraday & F&O.
 - Portfolio Dashboard.
-- Option to automate trade from the wallet.
+- Option to <strong>automate trade</strong> from the wallet.
 - Connect with a broker.
 
 # Advance Features
@@ -31,24 +34,6 @@ In the current market, there aren't many applications that can explain the conce
 - Users can opt for premium plans to secure their data by using <strong> blockchain technology under the hood to make it decentralized and safeguard their information. </strong>
 - LLMs for personalized recommendations and portfolio management, risk management using RAG models.
 - Enabling follow trading for users who want to make trading data public that others can utilize to <strong>create/replicate trading strategies.</strong>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ## 1. Project Architecture
@@ -135,10 +120,51 @@ $ npm i
   <li>Python 3.12.1</li>
 </ul>
 
+## 7. Google GenAI Tools Used
+
+<strong>1. MakerSuite</strong>
+
+MakerSuite is a fast, easy way to start building generative AI apps. It provides an efficient UI for prompting some of Google’s latest models and easily translates prompts into production-ready code you can integrate into applications. 
+
+Interacting with LLMs is as straightforward as crafting a plain language prompt, making it accessible to everyone. Prompts can be as simple as a single input, but you have the flexibility to provide additional context or examples, effectively guiding the model to produce the most optimal response. 
+
+<strong>2. VertexAI</strong>
+
+Generative AI on Vertex AI (also known as genAI or gen AI) gives access to many large generative AI models to evaluate, tune, and deploy them for use in  AI-powered applications.  
+
+<strong>3. Model Garden </strong>
+
+Google's opinionated take on the world's best models across first party, third-party, and open-source models. Our curated set of 130+ available models are best in class for their category, helping customers access highest performing foundation models that are best-suited for their business needs.
+
+Easily customize these models with your own data, deploy to applications with just one-click, and scale with end-to-end ML Ops built-in.
+
+<strong>4. Gemini-pro </strong>
+
+Designed to handle natural language tasks, multi turn text and code chat, and code generation. Gemini 1.0 Pro for prompts that only contain text.
+
+<strong>5. Gemini-pro-vision </strong>
+
+Multimodal model that supports adding image, PDF, and video in text prompts for a text or code response. Gemini 1.0 Pro Vision multimodal prompts.
+
+<strong>6. Dialogflow </strong>
+
+Building Agents with low-code no-low tools using Vertex AI Agent Builder and Dialogflow. We can connect to our documents to Dialogflow CX agent and leverage foundation models for generating responses from the content, out of the box. 
+
+Also call a foundation model to perform specific tasks during a virtual agent conversation or respond to a query contextually, significantly reducing development effort and making virtual agents more conversational.
+
+<strong>7. Chirp </strong>
+
+Chirp is the next generation of Google's speech-to-text models. Representing the culmination of years of research, the first version of Chirp is now available for Speech-to-Text. Intended to improve and expand Chirp to more languages and domains. Chirp models are trained with a different architecture than our current speech models. 
+
+<strong>8. GCS buckets </strong>
+
+Cloud Storage is a managed service for storing unstructured data. Store any amount of data and retrieve it as often as you like.
+
+
 ## 8. Application Screenshots / <a href="">Demo.</a>
 
 
-## 8. Components to be built (Work In Progress)
+## 9. Components to be built (Work In Progress)
 
 * [x] API Enhancement.
 
