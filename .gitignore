@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .idea
+/ml_models/shape_predictor_68_face_landmarks.dat
 
 # C extensions
 *.so
