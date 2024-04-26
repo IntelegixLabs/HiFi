@@ -12,9 +12,9 @@ Gather stock fundamental details like about the company, <strong>quarter results
 
 <strong> 2. Generating buy-sell decisions based on Market sentiments.</strong>
 
-<strong>Identify risk management based on input</strong>, leveraging <strong>LLMs</strong> understanding current situation and predict future price of the stock and show whether <strong>user should  buy, hold, or sell the stock from user portfolio to minimize the risk</strong>.
+<strong>Identify risk management based on input</strong>, leveraging <strong>LLMs</strong> understand the current situation and predict the future price of the stock and show whether <strong>user should  buy, hold, or sell the stock from user portfolio to minimize the risk</strong>.
 
-<strong> 3. Blockchain enabled security for premium customers.</strong>
+<strong> 3. Blockchain-enabled security for premium customers.</strong>
 
 Users can opt for premium plans to secure their data by using <strong>blockchain technology under the hood to make it decentralized and safeguard their information</strong>.
 
@@ -134,13 +134,13 @@ Generative AI on Vertex AI (also known as genAI or gen AI) gives access to many 
 
 <strong>3. Model Garden </strong>
 
-Google's opinionated take on the world's best models across first party, third-party, and open-source models. Our curated set of 130+ available models are best in class for their category, helping customers access highest performing foundation models that are best-suited for their business needs.
+Google's opinionated take on the world's best models across first-party, third-party, and open-source models. Our curated set of 130+ available models is best in class for their category, helping customers access the performing foundation models that are best suited for their business needs.
 
-Easily customize these models with your own data, deploy to applications with just one-click, and scale with end-to-end ML Ops built-in.
+Easily customize these models with your own data, deploy to applications with just one click, and scale with end-to-end ML Ops built-in.
 
 <strong>4. Gemini-pro </strong>
 
-Designed to handle natural language tasks, multi turn text and code chat, and code generation. Gemini 1.0 Pro for prompts that only contain text.
+Designed to handle natural language tasks, multi-turn text and code chat, and code generation. Gemini 1.0 Pro for prompts that only contain text.
 
 <strong>5. Gemini-pro-vision </strong>
 
@@ -148,7 +148,7 @@ Multimodal model that supports adding image, PDF, and video in text prompts for 
 
 <strong>6. Dialogflow </strong>
 
-Building Agents with low-code no-low tools using Vertex AI Agent Builder and Dialogflow. We can connect to our documents to Dialogflow CX agent and leverage foundation models for generating responses from the content, out of the box. 
+Building Agents with low-code no-low tools using Vertex AI Agent Builder and Dialogflow. We can connect our documents to the Dialogflow CX agent and leverage foundation models for generating responses from the content, out of the box. 
 
 Also call a foundation model to perform specific tasks during a virtual agent conversation or respond to a query contextually, significantly reducing development effort and making virtual agents more conversational.
 
@@ -162,6 +162,22 @@ Cloud Storage is a managed service for storing unstructured data. Store any amou
 
 
 ## 8. Application Screenshots / <a href="">Demo.</a>
+
+<p align="center">
+  <img src="data/screenshots/1.png" width="400"/>
+  <img src="data/screenshots/2.png" width="400"/>
+  <img src="data/screenshots/3.png" width="400"/>
+  <img src="data/screenshots/4.png" width="400"/>
+  <img src="data/screenshots/5.png" width="400"/>
+  <img src="data/screenshots/6.png" width="400"/>
+  <img src="data/screenshots/7.png" width="400"/>
+  <img src="data/screenshots/8.png" width="400"/>
+  <img src="data/screenshots/9.png" width="400"/>
+  <img src="data/screenshots/10.png" width="400"/>
+  <img src="data/screenshots/11.png" width="400"/>
+  <img src="data/screenshots/12.png" width="400"/>
+</p>
+
 
 
 ## 9. Components to be built (Work In Progress)
