@@ -27,6 +27,19 @@ networks:
         - subnet: 172.1.1.0/24
 
 services:
+  hifi:
+    build:
+      context: "../../../HiFi"
+      dockerfile: "docker/HiFi/Dockerfile"
+    volumes:
+      - ../../../HiFi:/app
+    stdin_open: true
+    tty: true
+    ports:
+      - "5002:5002"
+    container_name: hifi
+    env_file:
+      - ../../.env
   kong-migrations:
     image: kong:3.6
     command: kong migrations bootstrap
