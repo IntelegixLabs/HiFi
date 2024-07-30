@@ -54,12 +54,16 @@ Multi-agent collaboration for financial analysis is like a symphony where LLM-po
 
 So, whether you’re decoding market signals, predicting trends, or optimizing portfolios, remember: Behind the scenes, our financial agents are waltzing, cha-cha-ing, and occasionally doing the moonwalk—all for better insights! 🌟🤖
 
+<p align="center">
+  <img src="data/Multi-Agent Financial Analysis Tool.png" />
+</p> 
 
 ## 1. Project Architecture
 
 <p align="center">
   <img src="data/HiFi.png" />
 </p> 
+
 
 ## 2. Getting Started With The Fast API Application
 
