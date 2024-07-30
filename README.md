@@ -47,7 +47,6 @@ Multi-agent collaboration in financial analysis is like assembling a team of fin
 - Collaboration Mode Components: Here’s where the magic happens. AgentUniverse features a set of multi-agent collaboration mode components. Imagine these as different choreography styles for our financial dancers. Each component specializes in solving specific types of problems.
 - <strong>PEER Mode Component:</strong> This one’s like a synchronized routine. Agents take on different roles—Plan, Execute, Express, and Review. They break down complex problems, execute steps in sequence, and iteratively improve based on feedback. Think of it as a financial interpretive dance.
 - <strong>DOE Mode Component:</strong> Data-fining, Opinion-inject, and Express—these agents form a trio. They tackle data-intensive tasks, maintain computational precision, and incorporate expert opinions. It’s like a financial jazz ensemble.
-And more patterns are waiting in the wings—ready to dazzle us soon!
 
 <strong>In Summary:</strong>
 Multi-agent collaboration for financial analysis is like a symphony where LLM-powered agents harmonize, riff off each other, and create beautiful financial melodies. 🎶📊
