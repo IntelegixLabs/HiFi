@@ -221,7 +221,7 @@ Cloud Storage is a managed service for storing unstructured data. Store any amou
 
 
 
-## 9. Components to be built (Work In Progress)
+## 10. Components to be built (Work In Progress)
 
 * [x] API Enhancement.
 
