@@ -23,7 +23,7 @@ llama-index-postprocessor-cohere-rerank==0.1.7
 razorpay==1.4.2
 python-dateutil==2.9.0.post0
 jsonschema==4.23.0
-python-keycloak==4.2.3
+python-keycloak==3.7.0
 opencv-python==4.10.0.84
 dlib==19.24.2
 pytesseract==0.3.10
